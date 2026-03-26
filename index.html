@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial scale=1.0">
+
+<head>
+    <title>The Gym Fitness Center</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+
+        <div class="container">
+            <div class="logo">
+                <img src="Images/gym3.png" alt="Logo">
+            </div>
+            <button class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="containerrr">
+            <div class="hero-content">
+                <img src="Images/gym3.png" alt="The Gym Logo" class="hero-logo">
+                <h1>THE GYM FITNESS CENTER</h1>
+                <p>THE BEST GYM IN THE GALLE</p>
+                <button><a href="#join">Join Now</a></button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="Images/gym1.jpg" alt="photo of the gym">
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-intro">
+                <h2>About Us</h2>
+                <p>Welcome to The Gym Fitness Center. We provide top-notch equipment, expert trainers, and a supportive
+                    community to help you achieve your fitness goals.</p>
+            </div>
+
+            <div class="trainer" style="margin-top: 40px;">
+                <h3>Meet Our Trainer</h3>
+                <img src="Images/samithayya.jpg" alt="photo of the trainer">
+                <figcaption style="font-weight: bold; margin-top: 10px;">Samith Gamage</figcaption>
+                <p>Samith Gamage is a certified personal trainer with over 6 years of experience in the fitness
+                    industry. He specializes in weight loss, muscle gain, and sports performance training.</p>
+            </div>
+        </div>
+        <div class="about-stats">
+            <p>6+ Years of Experience</p>
+            <p>100+ Satisfied Clients</p>
+        </div>
+    </section>
+
+    <div class="marquee-container">
+        <div class="basic-marquee-text">
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+            <p>Train with the best equipment and trainers</p>
+        </div>
+    </div>
+
+    <section id="services" class="services">
+        <div class="container">
+            <div class="services-intro">
+                <h2>Our Services</h2>
+                <p>We provide a wide range of services to help you achieve your fitness goals.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Personal Training</h3>
+                    <p>One-on-one sessions tailored to your specific goals and fitness level.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Group Classes</h3>
+                    <p>High-energy group workouts including HIIT, yoga, spin, and more.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Nutrition Plans</h3>
+                    <p>Customized meal plans designed by certified nutritionists for optimal results.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Cardio Zone</h3>
+                    <p>State-of-the-art treadmills, bikes, and ellipticals for peak cardiovascular health.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p>Ready to start your fitness journey? Reach out to us today.</p>
+            <div class="contact-info">
+                <p><strong>Email:</strong> info@thegymfitness.com</p>
+                <p><strong>Phone:</strong> +94 77 123 4567</p>
+                <p><strong>Address:</strong> 123 Fitness Street, Colombo, Sri Lanka</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="join" class="join-now">
+        <div class="container">
+            <h2>JOIN NOW!</h2>
+            <div class="form-wrapper">
+                <form action="https:wa.me/+94770899974">
+                    <fieldset>
+                        <legend>CONTACT INFO</legend>
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" placeholder="Enter your name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" placeholder="Enter your phone" required>
+                        </div>
+
+                        <div class="form-buttons">
+                            <input type="submit" value="JOIN NOW" class="btn-submit">
+                            <input type="reset" value="RESET" class="btn-reset">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div>
+            <p>
+                <center>All Right Reserved 2026 The Gym Fitness Center</center>
+            </p>
+            <p>
+                <center>Designed by Esaa</center>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const nav = document.querySelector('nav');
+            const hamburger = document.querySelector('.hamburger');
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // Close menu when a link is tapped
+        document.querySelectorAll('nav ul li a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('nav').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>
