@@ -27,19 +27,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // Loading Screen Logic
     const loader = document.getElementById('loader');
     if (loader) {
-        window.addEventListener('load', () => {
+        const hideLoader = () => {
+            if (loader.classList.contains('fade-out')) return; // Already hiding
+            
             setTimeout(() => {
                 loader.classList.add('fade-out');
                 document.body.style.overflow = 'auto'; // Re-enable scrolling
-
+                
                 // Remove loader from DOM after animation
                 setTimeout(() => {
-                    loader.remove();
+                    if (loader.parentNode) loader.remove();
                 }, 800);
             }, 2500); // Minimum 2.5s visibility for the premium feel
-        });
+        };
+
+        // Standard load trigger
+        window.addEventListener('load', hideLoader);
+
+        // Safety fallback (ensures loader hides even if a resource fails to load)
+        setTimeout(hideLoader, 5000); 
     }
 });
+
 
 // Scroll Reveal Effect (Optional but adds to premium feel)
 window.addEventListener('scroll', () => {
