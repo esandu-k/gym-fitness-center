@@ -8,7 +8,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body style="overflow: hidden;">
+    <div id="loader">
+        <div class="loader-content">
+            <img src="Images/gym3.png" alt="Loading...">
+            <div class="loader-bar">
+                <div class="loader-bar-fill"></div>
+            </div>
+            <span>GETTING READY...</span>
+        </div>
+    </div>
+
     <header>
 
         <div class="container">
@@ -169,22 +179,8 @@
         </div>
     </footer>
 
-    <script>
-        function toggleMenu() {
-            const nav = document.querySelector('nav');
-            const hamburger = document.querySelector('.hamburger');
-            nav.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        }
-
-        // Close menu when a link is tapped
-        document.querySelectorAll('nav ul li a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.querySelector('nav').classList.remove('active');
-                document.querySelector('.hamburger').classList.remove('active');
-            });
-        });
-    </script>
+    <script src="script.js"></script>
+</body>
 
 </body>
 
