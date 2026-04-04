@@ -389,7 +389,7 @@ nav ul li a:hover::after {
 .basic-marquee-text {
     display: flex;
     gap: 60px;
-    animation: marquee-scroll 20s linear infinite;
+    animation: marquee-scroll 10s linear infinite;
 }
 
 .basic-marquee-text p {
@@ -409,6 +409,7 @@ nav ul li a:hover::after {
     100% {
         transform: translateX(-50%);
     }
+
 }
 
 /* ===== SERVICES ===== */
