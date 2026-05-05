@@ -72,12 +72,14 @@ header.scrolled {
     left: 0;
     width: 100%;
     height: 100%;
-    height: 100dvh; /* Dynamic viewport height for mobile */
+    height: 100dvh;
+    /* Dynamic viewport height for mobile */
     background: #0a0a0a;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10001; /* Above ALL other UI elements */
+    z-index: 10001;
+    /* Above ALL other UI elements */
     transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
@@ -96,7 +98,8 @@ header.scrolled {
 }
 
 .loader-content img {
-    height: clamp(80px, 15vw, 120px); /* Responsive logo size */
+    height: clamp(80px, 15vw, 120px);
+    /* Responsive logo size */
     animation: loaderPulse 2s ease-in-out infinite;
     filter: drop-shadow(0 0 10px rgba(229, 62, 62, 0.2));
 }
@@ -131,18 +134,37 @@ header.scrolled {
 }
 
 @keyframes loaderPulse {
-    0%, 100% { transform: scale(0.9); filter: brightness(1.2) drop-shadow(0 0 5px rgba(229, 62, 62, 0.1)); }
-    50% { transform: scale(1.1); filter: brightness(2) drop-shadow(0 0 20px rgba(229, 62, 62, 0.4)); }
+
+    0%,
+    100% {
+        transform: scale(0.9);
+        filter: brightness(1.2) drop-shadow(0 0 5px rgba(229, 62, 62, 0.1));
+    }
+
+    50% {
+        transform: scale(1.1);
+        filter: brightness(2) drop-shadow(0 0 20px rgba(229, 62, 62, 0.4));
+    }
 }
 
 @keyframes loadingBar {
-    from { width: 0%; }
-    to { width: 100%; }
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
 }
 
 @keyframes loaderFade {
-    from { opacity: 0.3; }
-    to { opacity: 1; }
+    from {
+        opacity: 0.3;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 
@@ -162,7 +184,13 @@ header .container {
 
 nav ul {
     display: flex;
+    align-items: center;
     gap: 32px;
+}
+
+nav ul li.google-login-btn {
+    display: flex;
+    align-items: center;
 }
 
 nav ul li a {
@@ -224,8 +252,15 @@ nav ul li a:hover::after {
 }
 
 @keyframes slowFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .hero-content h1 {
@@ -673,7 +708,8 @@ nav ul li a:hover::after {
 }
 
 .about-stats h2 {
-    width: 100%; /* Ensures title takes full width above stats */
+    width: 100%;
+    /* Ensures title takes full width above stats */
     font-size: 2.2rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -861,6 +897,7 @@ footer {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -868,9 +905,12 @@ footer {
 }
 
 @keyframes logoPulse {
-    0%, 100% {
+
+    0%,
+    100% {
         filter: brightness(1) drop-shadow(0 0 0px transparent);
     }
+
     50% {
         filter: brightness(1.3) drop-shadow(0 0 15px rgba(229, 62, 62, 0.4));
     }

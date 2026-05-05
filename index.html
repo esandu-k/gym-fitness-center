@@ -6,6 +6,7 @@
 <head>
     <title>The Gym Fitness Center</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body style="overflow: hidden;">
@@ -36,6 +37,11 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li class="google-login-btn">
+                        <button id="firebase-google-login"
+                            style="padding: 10px 24px; font-weight: 600; font-family: 'Outfit', sans-serif; border-radius: 50px; border: none; cursor: pointer; transition: transform 0.3s ease; background: #ffffff; color: #000; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);">Login
+                            with Google</button>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -179,6 +185,7 @@
         </div>
     </footer>
 
+    <script type="module" src="firebase.js"></script>
     <script src="script.js"></script>
 </body>
 

@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loader) {
         const hideLoader = () => {
             if (loader.classList.contains('fade-out')) return; // Already hiding
-            
+
             setTimeout(() => {
                 loader.classList.add('fade-out');
                 document.body.style.overflow = 'auto'; // Re-enable scrolling
-                
+
                 // Remove loader from DOM after animation
                 setTimeout(() => {
                     if (loader.parentNode) loader.remove();
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('load', hideLoader);
 
         // Safety fallback (ensures loader hides even if a resource fails to load)
-        setTimeout(hideLoader, 5000); 
+        setTimeout(hideLoader, 5000);
     }
 });
 
@@ -59,3 +59,10 @@ window.addEventListener('scroll', () => {
         header.classList.remove('scrolled');
     }
 });
+
+// Google Login Callback
+function handleCredentialResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+    // You can decode the JWT to get user info here, or send it to a backend
+    alert("Google Login Successful!\n\nNote: For security reasons, the JWT token is logged to the console.");
+}
