@@ -32,42 +32,47 @@ getRedirectResult(auth).then((result) => {
 
 // Apply working functionality to the Google login
 const loginBtn = document.getElementById('firebase-google-login');
+const logoutBtn = document.getElementById('logout-btn');
+const loginPage = document.getElementById('login-page');
+const mainApp = document.getElementById('main-app');
 
 if (loginBtn) {
     loginBtn.addEventListener('click', () => {
-        if (auth.currentUser) {
-            // User is logged in, log them out
-            signOut(auth).then(() => {
-                alert("Logged out successfully");
-            }).catch((error) => console.error("Logout Error:", error));
-        } else {
-            // BEST PRACTICE: Try Popup first. If mobile blocks it, fallback to Redirect.
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    const user = result.user;
-                    alert(`Welcome to the Club, ${user.displayName}!`);
-                }).catch((error) => {
-                    // If the browser blocks the popup (very common on mobile), use redirect
-                    if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
-                        signInWithRedirect(auth, provider);
-                    } else {
-                        console.error("Login Error:", error);
-                        alert("Login failed: " + error.message + " (Code: " + error.code + ")");
-                    }
-                });
-        }
-    });
-
-    // Listen for authentication state changes to update button UI
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            loginBtn.innerText = "Log Out";
-            loginBtn.style.background = "linear-gradient(135deg, #e53e3e, #c53030)";
-            loginBtn.style.color = "#fff";
-        } else {
-            loginBtn.innerText = "Login with Google";
-            loginBtn.style.background = "#ffffff";
-            loginBtn.style.color = "#000";
-        }
+        // BEST PRACTICE: Try Popup first. If mobile blocks it, fallback to Redirect.
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const user = result.user;
+                // No need to alert here, onAuthStateChanged will handle the UI
+            }).catch((error) => {
+                // If the browser blocks the popup (very common on mobile), use redirect
+                if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
+                    signInWithRedirect(auth, provider);
+                } else {
+                    console.error("Login Error:", error);
+                    alert("Login failed: " + error.message + " (Code: " + error.code + ")");
+                }
+            });
     });
 }
+
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+        signOut(auth).catch((error) => console.error("Logout Error:", error));
+    });
+}
+
+// Listen for authentication state changes to update the UI
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // User is logged in: Hide login page, show main app
+        if (loginPage) loginPage.classList.add('hidden');
+        if (mainApp) {
+            mainApp.style.display = 'block';
+            mainApp.style.animation = 'loginFadeUp 0.6s ease forwards';
+        }
+    } else {
+        // User is logged out: Show login page, hide main app
+        if (loginPage) loginPage.classList.remove('hidden');
+        if (mainApp) mainApp.style.display = 'none';
+    }
+});
