@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBr2CBdJpYgkmjmqMHaWrgXKyDEPEpL6Qg",
@@ -17,6 +17,18 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
 
+// Check for login result after redirect
+getRedirectResult(auth).then((result) => {
+    if (result) {
+        alert(`Welcome to the Club, ${result.user.displayName}!`);
+    }
+}).catch((error) => {
+    console.error("Redirect Login Error:", error);
+    if (error.code !== 'auth/unauthorized-domain') {
+        alert("Login failed: " + error.message);
+    }
+});
+
 // Apply working functionality to the Google login
 const loginBtn = document.getElementById('firebase-google-login');
 
@@ -28,15 +40,8 @@ if (loginBtn) {
                 alert("Logged out successfully");
             }).catch((error) => console.error("Logout Error:", error));
         } else {
-            // User is not logged in, log them in
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    const user = result.user;
-                    alert(`Welcome to the Club, ${user.displayName}!`);
-                }).catch((error) => {
-                    console.error("Login Error:", error);
-                    alert("Login failed: " + error.message);
-                });
+            // Use redirect instead of popup for mobile compatibility
+            signInWithRedirect(auth, provider);
         }
     });
 

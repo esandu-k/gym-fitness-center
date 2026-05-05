@@ -658,6 +658,18 @@ nav ul li a:hover::after {
         border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
+    nav ul li.google-login-btn {
+        padding: 16px 30px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    nav ul li.google-login-btn button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
     .hero-content h1 {
         font-size: 2.5rem;
     }
