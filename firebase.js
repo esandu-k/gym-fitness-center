@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBr2CBdJpYgkmjmqMHaWrgXKyDEPEpL6Qg",
@@ -17,15 +17,16 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
 
-// Check for login result after redirect
+// Check for login result if the user was redirected (fallback for mobile)
 getRedirectResult(auth).then((result) => {
     if (result) {
         alert(`Welcome to the Club, ${result.user.displayName}!`);
     }
 }).catch((error) => {
     console.error("Redirect Login Error:", error);
+    // Ignore unauthorized domain so it doesn't spam local testing
     if (error.code !== 'auth/unauthorized-domain') {
-        alert("Login failed: " + error.message);
+        alert("Login failed after redirect: " + error.message + " (Code: " + error.code + ")");
     }
 });
 
@@ -40,8 +41,20 @@ if (loginBtn) {
                 alert("Logged out successfully");
             }).catch((error) => console.error("Logout Error:", error));
         } else {
-            // Use redirect instead of popup for mobile compatibility
-            signInWithRedirect(auth, provider);
+            // BEST PRACTICE: Try Popup first. If mobile blocks it, fallback to Redirect.
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    alert(`Welcome to the Club, ${user.displayName}!`);
+                }).catch((error) => {
+                    // If the browser blocks the popup (very common on mobile), use redirect
+                    if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
+                        signInWithRedirect(auth, provider);
+                    } else {
+                        console.error("Login Error:", error);
+                        alert("Login failed: " + error.message + " (Code: " + error.code + ")");
+                    }
+                });
         }
     });
 
