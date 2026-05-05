@@ -653,7 +653,7 @@ nav ul li a:hover::after {
     width: 90%;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     animation: loginFadeUp 0.8s ease forwards;
     opacity: 0;
     transform: translateY(20px);
@@ -1023,4 +1023,46 @@ footer p {
     font-size: 0.85rem;
     color: #666;
     line-height: 1.8;
+}
+
+#email-input, #password-input {
+    color: #000000;
+    background-color: white;
+    border-radius: 50px;
+    padding: 14px 20px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    outline: none;
+    margin-bottom: 16px;
+    font-size: 1rem;
+    font-family: 'Outfit', sans-serif;
+    transition: box-shadow 0.3s ease;
+}
+
+#email-input:focus, #password-input:focus {
+    box-shadow: 0 0 10px rgba(229, 62, 62, 0.3);
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+#submit-btn {
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #e53e3e, #c53030);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: 'Outfit', sans-serif;
+    transition: transform 0.3s ease;
+}
+
+#submit-btn:hover {
+    transform: translateY(-2px);
 }
