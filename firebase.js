@@ -38,11 +38,41 @@ getRedirectResult(auth).then((result) => {
 // Apply working functionality to the Google login
 const loginBtn = document.getElementById('firebase-google-login');
 const logoutBtn = document.getElementById('logout-btn');
+const submitBtn = document.getElementById('submit-btn');
+const emailInput = document.getElementById('email-input');
 const loginPage = document.getElementById('login-page');
 const mainApp = document.getElementById('main-app');
 
+// Manual Form Login Logic
+if (submitBtn) {
+    submitBtn.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent page reload
+        const email = emailInput ? emailInput.value : null;
+        if (email && email.includes('@')) {
+            alert("Attempting to log in and send email via backend...");
+            // Send email using Nodemailer
+            sendWelcomeEmail(email, "Member").then((success) => {
+                if (success) {
+                    // Mock login success UI change
+                    if (loginPage) loginPage.classList.add('hidden');
+                    if (mainApp) {
+                        mainApp.style.display = 'block';
+                        mainApp.style.animation = 'loginFadeUp 0.6s ease forwards';
+                    }
+                } else {
+                    alert("Failed to send email. Is your backend server running with valid credentials?");
+                }
+            });
+        } else {
+            alert("Please enter a valid email address!");
+        }
+    });
+}
+
+// Google Login Logic
 if (loginBtn) {
-    loginBtn.addEventListener('click', () => {
+    loginBtn.addEventListener('click', (e) => {
+        e.preventDefault();
         // BEST PRACTICE: Try Popup first. If mobile blocks it, fallback to Redirect.
         signInWithPopup(auth, provider)
             .then((result) => {
