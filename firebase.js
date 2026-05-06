@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 import { initializeEmailJS, sendWelcomeEmail } from './emailHandler.js';
 
 const firebaseConfig = {
@@ -40,6 +40,7 @@ const loginBtn = document.getElementById('firebase-google-login');
 const logoutBtn = document.getElementById('logout-btn');
 const submitBtn = document.getElementById('submit-btn');
 const emailInput = document.getElementById('email-input');
+const passwordInput = document.getElementById('password-input');
 const loginPage = document.getElementById('login-page');
 const mainApp = document.getElementById('main-app');
 
@@ -48,23 +49,25 @@ if (submitBtn) {
     submitBtn.addEventListener('click', (e) => {
         e.preventDefault(); // Prevent page reload
         const email = emailInput ? emailInput.value : null;
-        if (email && email.includes('@')) {
-            alert("Attempting to log in and send email via backend...");
-            // Send email using Nodemailer
-            sendWelcomeEmail(email, "Member").then((success) => {
-                if (success) {
-                    // Mock login success UI change
-                    if (loginPage) loginPage.classList.add('hidden');
-                    if (mainApp) {
-                        mainApp.style.display = 'block';
-                        mainApp.style.animation = 'loginFadeUp 0.6s ease forwards';
-                    }
-                } else {
-                    alert("Failed to send email. Is your backend server running with valid credentials?");
-                }
-            });
+        const password = passwordInput ? passwordInput.value : null;
+        
+        if (email && password) {
+            // Actually authenticate the user with Firebase!
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    // Trigger backend email after successful login
+                    sendWelcomeEmail(user.email, user.displayName || "Member");
+                    
+                    // The UI transition (hiding login page) is handled automatically 
+                    // by the onAuthStateChanged listener at the bottom!
+                })
+                .catch((error) => {
+                    console.error("Manual Login Error:", error);
+                    alert("Login failed: " + error.message);
+                });
         } else {
-            alert("Please enter a valid email address!");
+            alert("Please enter both your email and password!");
         }
     });
 }
