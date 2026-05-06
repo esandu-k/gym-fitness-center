@@ -1025,7 +1025,8 @@ footer p {
     line-height: 1.8;
 }
 
-#email-input, #password-input {
+#email-input,
+#password-input {
     color: #000000;
     background-color: white;
     border-radius: 50px;
@@ -1039,7 +1040,8 @@ footer p {
     transition: box-shadow 0.3s ease;
 }
 
-#email-input:focus, #password-input:focus {
+#email-input:focus,
+#password-input:focus {
     box-shadow: 0 0 10px rgba(229, 62, 62, 0.3);
 }
 

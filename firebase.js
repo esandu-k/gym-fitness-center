@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+import { initializeEmailJS, sendWelcomeEmail } from './emailHandler.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBr2CBdJpYgkmjmqMHaWrgXKyDEPEpL6Qg",
@@ -17,10 +18,14 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
 
+// Initialize EmailJS using the dedicated handler file
+initializeEmailJS();
+
 // Check for login result if the user was redirected (fallback for mobile)
 getRedirectResult(auth).then((result) => {
     if (result) {
         alert(`Welcome to the Club, ${result.user.displayName}!`);
+        sendWelcomeEmail(result.user.email, result.user.displayName);
     }
 }).catch((error) => {
     console.error("Redirect Login Error:", error);
@@ -42,7 +47,7 @@ if (loginBtn) {
         signInWithPopup(auth, provider)
             .then((result) => {
                 const user = result.user;
-                // No need to alert here, onAuthStateChanged will handle the UI
+                sendWelcomeEmail(user.email, user.displayName);
             }).catch((error) => {
                 // If the browser blocks the popup (very common on mobile), use redirect
                 if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {

@@ -2,38 +2,42 @@
 
 /**
  * INSTRUCTIONS:
- * 1. Make sure you have included the EmailJS script in your index.html <head>:
- *    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
- * 
- * 2. Import these functions in your firebase.js (or any other module file) like this:
- *    import { initializeEmailJS, sendWelcomeEmail } from './emailHandler.js';
- * 
- * 3. Call initializeEmailJS() once when the page loads.
- * 
- * 4. Call sendWelcomeEmail(user.email, user.displayName) right after a successful login!
+ * 1. You no longer need EmailJS! I have configured a local Node.js server using Nodemailer.
+ * 2. You MUST run `node server.js` in a separate terminal to start the email server.
+ * 3. Make sure to update server.js with your Gmail credentials (App Password).
  */
 
 export function initializeEmailJS() {
-    // Replace with your actual Public Key from the EmailJS Dashboard
-    emailjs.init("tHh9U_M4R1v5_7YgJ");
+    // Left empty so it doesn't break firebase.js which calls this function
+    console.log("Using Nodemailer Backend instead of EmailJS.");
 }
 
 export function sendWelcomeEmail(userEmail, userName) {
-    // These parameters must exactly match the variables {{to_email}} and {{to_name}} in your EmailJS template
-    const templateParams = {
-        to_email: userEmail,
-        to_name: userName || "Member",
-        message: "Welcome to The Gym Fitness Center! We're thrilled to have you log in."
-    };
+    console.log(`Sending Nodemailer welcome email to ${userEmail}...`);
 
-    // Replace with your Service ID and Template ID from EmailJS
-    return emailjs.send("service_7izwakp", "template_j3ohuhp", templateParams)
-        .then(() => {
-            console.log("Welcome email sent successfully to", userEmail);
-            return true;
+    return fetch('http://localhost:3000/send-welcome-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userEmail: userEmail,
+            userName: userName || "Member"
         })
-        .catch((error) => {
-            console.error("Failed to send welcome email:", error);
-            return false;
-        });
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Welcome email sent successfully via Nodemailer!");
+        return true;
+    })
+    .catch((error) => {
+        console.error("Failed to send welcome email via backend server:", error);
+        return false;
+    });
 }
+
